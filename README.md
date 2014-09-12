@@ -1,8 +1,6 @@
-<p style="text-align:left">
 **Eric Bailey  
 Due 16 Sept 2014  
 COMP116 HW1**
-</p>
 
 ---
 
