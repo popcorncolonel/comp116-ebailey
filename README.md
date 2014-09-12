@@ -1,8 +1,12 @@
-##Eric Bailey##
-##Due 16 Sept 2014##
-##COMP116 HW1##
+<p style="text-align:left">
+**Eric Bailey  
+Due 16 Sept 2014  
+COMP116 HW1**
+</p>
 
-###set1.pcap###
+---
+
+####set1.pcap
 
 **1. How many packets are there in this set?**  
 1503
@@ -38,7 +42,7 @@ smash.txt
 ![three](BvzjaN-IQAA3XG7.jpg)
 [smash.txt](smash.txt)
 
-###set2.pcap###
+####set2.pcap
 
 **10. How many packets are there in this set?**  
 
