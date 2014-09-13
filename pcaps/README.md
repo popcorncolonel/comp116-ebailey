@@ -1,6 +1,8 @@
+<p style="text-align:right">
 **Eric Bailey  
 Due 16 Sept 2014  
 COMP116 HW1**
+</p>
 
 ---
 
@@ -43,6 +45,7 @@ smash.txt
 ####set2.pcap
 
 **10. How many packets are there in this set?**  
+77882
 
 **11. How many plaintext username-password pairs are there in this packet set?**  
 
