@@ -71,38 +71,6 @@ cisco | 185 12345d | TELNET | 200.60.17.1:23 | (local cisco router) | No
 cisco | 185 122333 | TELNET | 200.60.17.1:23 | (local cisco router) | No
 cisco | 184 yomama1 | TELNET | 200.60.17.1:23 | (local cisco router) | No
 
-=POP=  
-**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: mail.si-sv3231.com; **Port**:110  
-**Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
-
-**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: aece765e-be1e-4e0d-a4ab-e4cb003228d7@mail.si-sv3231.com; **Port**:110
-**Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
-
-=TELNET=  
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 august23"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 anthony7"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 allahu"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 alannah"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 BASKETBALL"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 12345d"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "185 122333"  
-
-**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
-**Username**: "cisco" **Password**: "184 yomama1"  
-
 **14. Of all the plaintext username-password pairs that you found, how many of them are legitimate? That is, the username-password was valid, access successfully granted?**  
 Regarding the _unique_ (UN,PW) pairs I found, the only valid pair is (chris@digitalinterlude.com, Volrathw69). However, it was used to log in two different times (TCP streams 144 and 627).
 
