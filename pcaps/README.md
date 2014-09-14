@@ -59,11 +59,23 @@ I used these tools to search for "password", "login", things of that natures in 
 
 **13. For each of the plaintext username-password pair that you found, identify the protocol used,  Server IP, the corresponding domain name (e.g., google.com), and port number.**  
 
+User       | Password     | Protocol  | Destination IP:Port | Hostname | Successful?
+--- | --- | --- | --- | --- | --- 
+chris@digitalinterlude.com | Volrathw69 | POP | 75.126.75.131:110 | mail.si-sv3231.com | Yes
+cisco | 185 august23 | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 anthony7 | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 allahu | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 alannah | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 BASKETBALL | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 12345d | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 122333 | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 184 yomama1 | TELNET | 200.60.17.1:23 | (local cisco router) | No
+
 =POP=  
-**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: mail.si-sv3231.com; **Port**:83  
+**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: mail.si-sv3231.com; **Port**:110  
 **Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
 
-**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: aece765e-be1e-4e0d-a4ab-e4cb003228d7@mail.si-sv3231.com; **Port**:83
+**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: aece765e-be1e-4e0d-a4ab-e4cb003228d7@mail.si-sv3231.com; **Port**:110
 **Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
 
 =TELNET=  
