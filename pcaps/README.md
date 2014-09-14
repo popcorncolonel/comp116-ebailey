@@ -1,8 +1,6 @@
-<p style="text-align:right">
 **Eric Bailey  
 Due 16 Sept 2014  
 COMP116 HW1**
-</p>
 
 ---
 
@@ -55,51 +53,55 @@ I was able to find 9 unique pairs ([chris@digitalinterlude.com](mailto:chris@dig
 * Wireshark (filtering by specific insecure protocols and ports led to the most success)
     * tcp contains "(pass|password|PASS|Password|login|user|username|success)"
 * tshark (told me where to look. "tshark -r set2.pcap -q -z io,phs")
-* ngrep -q -I set2.pcap | grep [-i] (pass|password|PASS|Password|login|user|username|success)
+* ngrep -q -I set2.pcap | grep \[-i] (pass|password|PASS|Password|login|user|username|success)
 
 I used these tools to search for "password", "login", things of that natures in the pcap file. Lots of following TCP streams as well.
 
-**13. For each of the plaintext username-password pair that you found, identify the protocol used, server IP, the corresponding domain name (e.g., google.com), and port number.**  
+**13. For each of the plaintext username-password pair that you found, identify the protocol used,  Server IP, the corresponding domain name (e.g., google.com), and port number.**  
+
+=POP=  
+**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: mail.si-sv3231.com; **Port**:83  
+**Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
+
+**Protocol**: POP; **Server IP**: 75.126.75.131;**Domain**: aece765e-be1e-4e0d-a4ab-e4cb003228d7@mail.si-sv3231.com; **Port**:83
+**Username**: "chris@digitalinterlude.com" **Password**: "Volrathw69"; 
+
+=TELNET=  
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 august23"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 anthony7"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 allahu"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 alannah"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 BASKETBALL"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 12345d"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "185 122333"  
+
+**Protocol**: TELNET;  **Server IP**: 200.60.17.1; **Domain**: (local cisco router); **Port**: 23  
+**Username**: "cisco" **Password**: "184 yomama1"  
 
 **14. Of all the plaintext username-password pairs that you found, how many of them are legitimate? That is, the username-password was valid, access successfully granted?**  
+Regarding the _unique_ (UN,PW) pairs I found, the only valid pair is (chris@digitalinterlude.com, Volrathw69). However, it was used to log in two different times (TCP streams 144 and 627).
 
 **15. How did you verify the successful username-password pairs?**  
 For POP, the server responded with "+OK Password ok" for valid pairs rather than "% Login invalid" like TELNET gives. I looked for similar human-readable clues (such as "Login successful," "Access granted", etc.)
 
 **16. What advice would you give to the owners of the username-password pairs that you found so their account information would not be revealed "in-the-clear" in the future?**  
+
 * Use secure, encrypted protocols (like SSH or HTTPS) rather than the alternative (TELNET, POP, FTP, etc.) when dealing with sensitive information such as usernames and passwords.
+
 * Always use trusted Internet sources (not free public WiFi's) when logging in.
+
 * Take COMP116 via Tufts University
-
-random notes (delete this for final submission):
--only 2 successful login attempts?
--1 of the files is an anti-malware thing from msoft (I guess files don't matter, just un-pw pairs)
-
-===(U, P) PAIRS=== (valid pairs will be noted -- invalid ones will not)
-=POP=
-(stream 144)
-"chris@digitalinterlude.com" || "Volrathw69" <- PASSWORD OK!!!; server IP: 75.126.75.131;domain:a64c4dbd-2813-46a0-9974-dee7f8564f5d@mail.si-sv3231.com; port:83
-
-(stream 627)
-"chris@digitalinterlude.com" || "Volrathw69" <- PASSWORD OK!!!; server IP: 75.126.75.131;domain:aece765e-be1e-4e0d-a4ab-e4cb003228d7@mail.si-sv3231.com; port:83
-
-
-=TELNET=
-(stream 18) server IP: 200.60.17.1; domain:(local router); port: 23
-"cisco" || "185 august23"
-
-(stream 110) server IP: 200.60.17.1; domain:(local router); port: 23
-"cisco" || "185 anthony7"
-"cisco" || "185 allahu"
-
-(stream 319) server IP: 200.60.17.1; domain:(local router); port: 23
-"cisco" || "185 alannah"
-"cisco" || "185 BASKETBALL"
-
-(stream 504) server IP: 200.60.17.1; domain:(local router); port: 23
-"cisco" || "185 12345d"
-"cisco" || "185 122333"
-
-(stream 696 - 75039) server IP: 200.60.17.1; domain:(local router); port: 23
-"cisco" || "184 yomama1"
 
