@@ -62,14 +62,16 @@ I used these tools to search for "password", "login", things of that natures in 
 User       | Password     | Protocol  | Destination IP:Port | Hostname | Successful?
 --- | --- | --- | --- | --- | --- 
 chris@digitalinterlude.com | Volrathw69 | POP | 75.126.75.131:110 | mail.si-sv3231.com | Yes
-cisco | 185 august23 | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 anthony7 | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 allahu | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 alannah | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 BASKETBALL | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 12345d | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 185 122333 | TELNET | 200.60.17.1:23 | (local cisco router) | No
-cisco | 184 yomama1 | TELNET | 200.60.17.1:23 | (local cisco router) | No
+cisco | 185 august23 | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 anthony7 | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 allahu | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 alannah | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 BASKETBALL | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 12345d | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 185 122333 | TELNET | 200.60.17.1:23 | (none) | No
+cisco | 184 yomama1 | TELNET | 200.60.17.1:23 | (none) | No
+
+Note: After looking up 200.60.17.1 via DNS, I could not find anything other than the fact that the IP is probably from Peru.
 
 **14. Of all the plaintext username-password pairs that you found, how many of them are legitimate? That is, the username-password was valid, access successfully granted?**  
 Regarding the _unique_ (UN,PW) pairs I found, the only valid pair is (chris@digitalinterlude.com, Volrathw69). However, it was used to log in two different times (TCP streams 144 and 627).
