@@ -4,12 +4,12 @@ COMP116 HW2**
 
 ---
 
-###What has been implemented###  
+**What has been implemented**  
 Nothing yet
 
-###Collaborators/people I've discussed it with###  
+**Collaborators/people I've discussed it with**  
 No one so far
 
-###Hours taken###  
+**Hours taken**  
 0 so far
 
