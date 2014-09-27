@@ -23,7 +23,7 @@ No one so far
 * write log analyzer
 * write live alarm
 * remove notes
-* remove sheep
+* remove sheep?
 
 ---
 
