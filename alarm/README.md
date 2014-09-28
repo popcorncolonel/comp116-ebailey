@@ -30,7 +30,7 @@ No one so far
 **MUST DETECT**
 * NMAP scan (of any variety)
 * HTTP errors, anything that has an HTTP status code in the 400-range
-* Shellcode. For some background reading on shellcode and what it is, read https://morgawr.github.io/hacking/2014/03/29/shellcode-to-reverse-bind-with-netcat/
+* Shellcode. 
 
 **NOTES** (about access.log)
 * user-agent from nmap
