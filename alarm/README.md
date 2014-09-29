@@ -23,6 +23,7 @@ No one so far
 * write log analyzer
 * write live alarm
 * remove notes
+* Ask this question: What do we do if there is more than one thing wrong with the log? (ex. shellcode and 4\*\* error) Do we print each error? Just the first one we hit?
 * remove sheep?
 
 ---
