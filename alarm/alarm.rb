@@ -16,6 +16,14 @@ OR
 
 =end
     puts ("TODO :D")
+    Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it
+    require 'packetfu'
+while true
+    stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
+    sleep 10
+    cap.save
+    puts cap.array[0].to_s
+end
 end
 
 def analyze_log(filename)
