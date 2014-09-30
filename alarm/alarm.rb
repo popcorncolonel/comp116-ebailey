@@ -18,11 +18,17 @@ OR
     puts ("TODO :D")
     Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it
     require 'packetfu'
-while true
+
     stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-    sleep 10
-    cap.save
-    puts cap.array[0].to_s
+while true
+    sleep 1
+    stream.save
+    stream.stream.each do |p|
+        packet = ::PacketFu::Packet.parse(p)
+        puts packet.peek
+    end
+    #puts stream.array.length
+    #puts stream.array[stream.array.length-1].to_s
 end
 end
 
