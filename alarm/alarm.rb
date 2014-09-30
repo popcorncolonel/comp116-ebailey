@@ -20,16 +20,22 @@ OR
     require 'packetfu'
 
     stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-while true
-    sleep 1
-    stream.save
-    stream.stream.each do |p|
-        packet = ::PacketFu::Packet.parse(p)
-        puts packet.peek
+    i = 0
+    while true
+        sleep 1
+        stream.save
+        stream.stream.each do |p|
+            packet = ::PacketFu::Packet.parse(p)
+            puts packet.peek
+            puts packet.payload
+            puts packet.protocol
+            puts i
+            i += 1
+            puts 
+        end
+        #puts stream.array.length
+        #puts stream.array[stream.array.length-1].to_s
     end
-    #puts stream.array.length
-    #puts stream.array[stream.array.length-1].to_s
-end
 end
 
 def analyze_log(filename)
