@@ -20,13 +20,14 @@ OR
     require 'packetfu'
 
     stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-    i = 0
+    i = 1
     while true
         sleep 1
         stream.save
         stream.stream.each do |p|
             packet = ::PacketFu::Packet.parse(p)
             puts packet.peek
+            puts "==============================================================================="
             puts packet.payload
             puts packet.protocol
             puts i
