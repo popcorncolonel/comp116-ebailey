@@ -6,3 +6,5 @@ lopht:password1
 bigbear:butthead
 ian:bond007
 tomcat:soccer1
+sanfran:Cisco
+pi:Raspberry
