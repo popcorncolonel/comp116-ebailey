@@ -1,4 +1,8 @@
-password1:lopht
-butthead:bigbear
-bond007:ian
-soccer1:tomcat
+There are 9 pairs in total.
+
+username:password
+
+lopht:password1 
+bigbear:butthead
+ian:bond007
+tomcat:soccer1
