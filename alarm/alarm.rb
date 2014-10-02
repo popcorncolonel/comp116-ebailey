@@ -72,12 +72,14 @@ IP - - [date:time +tz] "request" statuscode ? ? "user-agent"
         request = line.split('"')[1]
         status_code = line.split('"')[2].split(' ')[0]
         user_agent = line.split('"')[5]
+        protocol = 'HTTP'
         #puts ip_addr
         #puts request
         #puts status_code
         puts user_agent
         #if it's shellcode (read thing)
-        #shellcodes appear to be of the form (\\x[0-9a-f]{2}){3,} and paired with a 400 error code (NOT TRUE IF IT WORKED? OR IS IT?) but 400 error code not 100% required from what i can tell.
+        #shellcodes appear to be of the form (\\x[0-9a-f]{2}.{0,1}){3,} and paired with a 400 error code (NOT TRUE IF IT WORKED? OR IS IT?) but 400 error code not 100% required from what i can tell.
+        #
         return to_return
     end
 
