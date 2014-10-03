@@ -39,7 +39,6 @@ OR
     end
 end
 
-def analyze_log(filename)
 =begin
     **NOTES** (about access.log)
     * if the user agent is from nmap then... yeah... cmon...
@@ -59,41 +58,61 @@ IP - - [date:time +tz] "request" statuscode ? ? "user-agent"
 
 =end
 
-    #CONTRACT: takes in a line of a server log. 
-    # Returns the nil if the does not trigger one of the 3 alerts
-    # Returns the properly formatted alert message (starting after "ALERT: ")
-    def read_incident(line)
-        to_return = nil
-            #tokenize based on spaces " then by spaces
-        #if it's an nmap scan (how 2 detect?) (just see if line is coming from nmap? is there a way it's coming from an nmap scan but not from user-agent nmap?)
-        #if it has a 4** http response (easy. regex.)
-        puts line
+def analyze_log(filename)
+    $incident = 1
+
+    def alert(attack, ip_addr, protocol, payload)
+        attack = attack
+        puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
+        $incident += 1
+    end
+
+    def has_shellcode?(str)
+        #shellcodes appear to be of the form /(\\x[0-9a-f]{2}.{0,1}){3,}/i
+        #AND at the beginning of strings!
+        return str =~ /(\\x[0-9a-f]{2}.{0,1}){3,}/i
+    end
+    
+    def analyze_log_line(line)
+        error_statement = nil
+
         ip_addr = line.split(' ')[0]
         request = line.split('"')[1]
         status_code = line.split('"')[2].split(' ')[0]
         user_agent = line.split('"')[5]
-        protocol = 'HTTP'
-        #puts ip_addr
-        #puts request
-        #puts status_code
-        puts user_agent
-        #if it's shellcode (read thing)
-        #shellcodes appear to be of the form (\\x[0-9a-f]{2}.{0,1}){3,} and paired with a 400 error code (NOT TRUE IF IT WORKED? OR IS IT?) but 400 error code not 100% required from what i can tell.
-        #
-        return to_return
+
+        if request != '' then #some lines are like this o.O with 400 errors
+            if has_shellcode?(request) == 0 then
+                alert('shellcode', ip_addr, 'HTTP', request)
+                return
+            end
+            #alert(incident, 'HTTP error', ip_addr, protocol, payload)
+            # if request is shellcode, alert
+            protocol = request.split(' ')[-1].split('/')[0]
+            if protocol != 'HTTP' and false then
+                puts
+                puts
+                puts protocol
+                puts line
+                puts
+                puts
+            end
+        else
+            #puts status_code
+        end
+
+        #bad status code
+        if status_code.to_i >= 400 then
+            #alert(incident, 'HTTP error', ip_addr, protocol, payload)
+        end
+
+
     end
 
     f = File.open(filename, 'r')
-    puts "reading..."
-    incident = 1
     f.each_line do |line|
-        line = read_incident(line)
-        if line != nil
-            puts incident.to_s + '. ALERT: ' + line
-            incident += 1
-        end
+        line = analyze_log_line(line)
     end
-    puts "done reading"
     f.close
 end
 
