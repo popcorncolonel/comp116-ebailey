@@ -1,76 +1,53 @@
 #!/usr/bin/ruby
 
+$incident = 1
 def live_capture()
-=begin
-    ***MUST DETECT***
-NULL scan
-Xmas scan
-Credit card number leaked in the clear via website
+    def alert(attack, ip_addr, protocol, payload)
+        if attack == 'Credit card' then
+            puts '%d. ALERT: %s leaked in the clear from %s (%s) (%s)!' %[$incident, attack, ip_addr, protocol, payload]
+        else
+            puts '%d. ALERT: %s is detected from %s (%s) (%s)!' %[$incident, attack, ip_addr, protocol, payload]
+        end
+        $incident += 1
+    end
 
-***IN THE FORM***
-#{incident_number}. ALERT: #{attack} is detected from #{source IP address} (#{protocol}) (#{payload})!
-
-OR
-
-#{incident_number}. ALERT: Credit card leaked in the clear from #{source IP address} (#{protocol}) (#{payload})!
-
-=end
-    puts ("TODO :D")
-    Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it
+    Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it. sometimes.
     require 'packetfu'
 
-    stream = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
-    i = 1
-    while true
-        sleep 1
-        stream.save
-        stream.stream.each do |p|
-            packet = ::PacketFu::Packet.parse(p)
-            #if NULL scan then end
-            #if Xmas scan then end
-            #if Credit Card then end #
-            #CREDIT CARD REGEX: /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})/
-            #- http://stackoverflow.com/questions/9315647/regex-credit-card-number-tests
-            puts packet.peek
-            puts "==============================================================================="
-            puts packet.payload
+    caps = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
+    caps.stream.each do |raw|
+        packet = PacketFu::Packet.parse(raw)
+        if packet.protocol.include?('TCP') then
+            if (packet.tcp_flags.fin +  #if XMAS scan
+                packet.tcp_flags.psh + 
+                packet.tcp_flags.urg) == 3 then
+                alert('Xmas scan', ip_addr, 'TCP', 'binary data')
+            end
+            if (packet.tcp_flags.urg +  #if NULL scan
+                packet.tcp_flags.ack + 
+                packet.tcp_flags.psh + 
+                packet.tcp_flags.rst +
+                packet.tcp_flags.syn + 
+                packet.tcp_flags.fin) == 0 then
+                alert('NULL scan', ip_addr, 'TCP', 'binary data')
+            end
+        else
+            puts packet.payload #maybe check if the payload matches the regex?
             puts packet.protocol
-            puts i
-            i += 1
-            puts 
+            puts "found packet but not tcp :("
         end
-        #puts stream.array.length
-        #puts stream.array[stream.array.length-1].to_s
     end
+
+#CREDIT CARD REGEX: /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})/
+#- http://stackoverflow.com/questions/9315647/regex-credit-card-number-tests
+
 end
 
-=begin
-    **NOTES** (about access.log)
-    * if the user agent is from nmap then... yeah... cmon...
-
-    ***MUST DETECT***
-NMAP scan (of any variety)
-HTTP errors, anything that has an HTTP status code in the 400-range
-Shellcode. For some background reading on shellcode and what it is, read https://morgawr.github.io/hacking/2014/03/29/shellcode-to-reverse-bind-with-netcat/
-
-***IN THE FORM***
-#{incident_number}. ALERT: #{attack} is detected from #{source IP address} (#{protocol}) (#{payload})!
-
-***LINE FORMAT***
-73.38.0.142 - - [11/Sep/2014:23:49:48 +0200] "HEAD /import HTTP/1.1" 404 0 "-" "Mozilla/5.0"
-*TOKENS*
-IP - - [date:time +tz] "request" statuscode ? ? "user-agent"
-
-=end
-
 def analyze_log(filename)
-    $incident = 1
 
     def alert(attack, ip_addr, protocol, payload)
         puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
-        #if attack == 'NMAP scan' then
-        #    puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
-        #end
+        #puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
         $incident += 1
     end
 
@@ -103,6 +80,8 @@ def analyze_log(filename)
             if protocol != 'HTTP' and protocol != 'RTSP' and protocol != 'HTTPS' then
                 protocol = 'HTTP'
             end
+        else
+            protocol = 'HTTP'
         end
 
         #nmap
@@ -112,6 +91,7 @@ def analyze_log(filename)
 
         #bad status code
         if status_code.to_i >= 400 then
+            if request == '' then request = '-' end
             alert('HTTP error', ip_addr, protocol, request)
         end
 
