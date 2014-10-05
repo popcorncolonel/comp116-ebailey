@@ -14,9 +14,15 @@ def live_capture()
     Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it. sometimes.
     require 'packetfu'
 
+    #I couldn't test this part because, well, I didn't want to leak creditcard info in the clear.
+    #Also, I couldn't open ports on Kali (tried doing gufw to open ports, didn't work on tuftswireless)
     caps = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
     caps.stream.each do |raw|
         packet = PacketFu::Packet.parse(raw)
+        ip_addr = 'ERROR - not sent using IP'
+        if packet.protocol.include?('IP') then
+            ip_addr = packet.ip_saddr #source address
+        end
         if packet.protocol.include?('TCP') then
             if (packet.tcp_flags.fin +  #if XMAS scan
                 packet.tcp_flags.psh + 
@@ -31,10 +37,10 @@ def live_capture()
                 packet.tcp_flags.fin) == 0 then
                 alert('NULL scan', ip_addr, 'TCP', 'binary data')
             end
-        else
-            puts packet.payload #maybe check if the payload matches the regex?
-            puts packet.protocol
-            puts "found packet but not tcp :("
+        end
+        #if the packet matches a credit card regex,
+        if packet.payload =~ /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})/ then
+            alert('NULL scan', ip_addr, packet.protocol[-1], 'binary data')
         end
     end
 
@@ -47,7 +53,6 @@ def analyze_log(filename)
 
     def alert(attack, ip_addr, protocol, payload)
         puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
-        #puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
         $incident += 1
     end
 
