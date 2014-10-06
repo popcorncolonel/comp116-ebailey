@@ -39,14 +39,10 @@ def live_capture()
             end
         end
         #if the packet matches a credit card regex,
-        if packet.payload =~ /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})/ then
+        if packet.payload =~ /((4\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(5\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(6011(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(3\d{3}(\s|-)?\d{6}(\s|-)?\d{5}))/ then
             alert('NULL scan', ip_addr, packet.protocol[-1], 'binary data')
         end
     end
-
-#CREDIT CARD REGEX: /(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})/
-#- http://stackoverflow.com/questions/9315647/regex-credit-card-number-tests
-
 end
 
 def analyze_log(filename)
