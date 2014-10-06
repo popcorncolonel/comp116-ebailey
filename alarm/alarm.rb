@@ -3,6 +3,7 @@
 $incident = 1
 def live_capture()
     def alert(attack, ip_addr, protocol, payload)
+        payload = Base64.encode64(payload)
         if attack == 'Credit card' then
             puts '%d. ALERT: %s leaked in the clear from %s (%s) (%s)!' %[$incident, attack, ip_addr, protocol, payload]
         else
@@ -27,7 +28,7 @@ def live_capture()
             if (packet.tcp_flags.fin +  #if XMAS scan
                 packet.tcp_flags.psh + 
                 packet.tcp_flags.urg) == 3 then
-                alert('Xmas scan', ip_addr, 'TCP', 'binary data')
+                alert('Xmas scan', ip_addr, 'TCP', packet.payload)
             end
             if (packet.tcp_flags.urg +  #if NULL scan
                 packet.tcp_flags.ack + 
@@ -35,12 +36,14 @@ def live_capture()
                 packet.tcp_flags.rst +
                 packet.tcp_flags.syn + 
                 packet.tcp_flags.fin) == 0 then
-                alert('NULL scan', ip_addr, 'TCP', 'binary data')
+                alert('NULL scan', ip_addr, 'TCP', packet.payload)
             end
         end
-        #if the packet matches a credit card regex,
-        if packet.payload =~ /((4\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(5\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(6011(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(3\d{3}(\s|-)?\d{6}(\s|-)?\d{5}))/ then
-            alert('NULL scan', ip_addr, packet.protocol[-1], 'binary data')
+        #if the packet matches a credit card regex OVER A WEBSITE (HTTP)
+        if packet.protocol.include?('HTTP') then
+            if packet.payload =~ /((4\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(5\d{3}(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(6011(\s|-)?\d{4}(\s|-)?\d{4}(\s|-)?\d{4})|(3\d{3}(\s|-)?\d{6}(\s|-)?\d{5}))/ then
+                alert('Credit card', ip_addr, 'HTTP', packet.payload)
+            end
         end
     end
 end
@@ -48,6 +51,7 @@ end
 def analyze_log(filename)
 
     def alert(attack, ip_addr, protocol, payload)
+        payload = Base64.encode64(payload)
         puts '%d. ALERT: %s is detected from %s (%s) ("%s")!' %[$incident, attack, ip_addr, protocol, payload]
         $incident += 1
     end
