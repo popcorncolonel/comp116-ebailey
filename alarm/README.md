@@ -8,7 +8,7 @@ COMP116 HW2**
 Everything has been implemented to the best of my knowledge.
 
 **Collaborators/people I've discussed it with**   
-I briefly discussed this problem with Sam Garfield.
+I very briefly discussed this problem with Sam Garfield.
 
 **Hours taken**   
 Somewhere around 6-10
