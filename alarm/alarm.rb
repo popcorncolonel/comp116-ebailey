@@ -1,9 +1,11 @@
 #!/usr/bin/ruby
+require 'base64'
 
 $incident = 1
 def live_capture()
     def alert(attack, ip_addr, protocol, payload)
-        payload = Base64.encode64(payload)
+        #payload = Base64.encode64(payload)
+        payload = payload.each_byte.map { |b| sprintf(" 0x%02X ",b) }.join
         if attack == 'Credit card' then
             puts '%d. ALERT: %s leaked in the clear from %s (%s) (%s)!' %[$incident, attack, ip_addr, protocol, payload]
         else
