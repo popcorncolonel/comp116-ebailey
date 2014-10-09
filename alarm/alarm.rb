@@ -4,8 +4,8 @@ require 'base64'
 $incident = 1
 def live_capture()
     def alert(attack, ip_addr, protocol, payload)
-        #payload = Base64.encode64(payload)
-        payload = payload.each_byte.map { |b| sprintf(" 0x%02X ",b) }.join
+        #payload = payload.each_byte.map { |b| sprintf(" 0x%02X ",b) }.join
+        payload = Base64.encode64(payload)
         if attack == 'Credit card' then
             puts '%d. ALERT: %s leaked in the clear from %s (%s) (%s)!' %[$incident, attack, ip_addr, protocol, payload]
         else
@@ -17,8 +17,6 @@ def live_capture()
     Signal.trap('INT'){ exit 0 } #for being able to ctrl+c it. sometimes.
     require 'packetfu'
 
-    #I couldn't test this part because, well, I didn't want to leak creditcard info in the clear.
-    #Also, I couldn't open ports on Kali (tried doing gufw to open ports, didn't work on tuftswireless)
     caps = PacketFu::Capture.new(:start => true, :iface => 'eth0', :promisc => true)
     caps.stream.each do |raw|
         packet = PacketFu::Packet.parse(raw)
