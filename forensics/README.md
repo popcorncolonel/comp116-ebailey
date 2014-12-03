@@ -15,7 +15,7 @@ Due 12/04/14
 hidden information in the picture that is different from the others. Please
 detail your steps!*
 
-We determined that b.jpg differed from the rest, isolating b.jpg using diff. Then, we used steghide to confirm that hidden data was located within b.jpg. We cracked the passphrase (“disney”) using brute force, which gave us the executable runme.  
+We determined that b.jpg differed from the rest, isolating b.jpg using diff. Then, we used steghide to confirm that hidden data was located within b.jpg. We cracked the passphrase (“disney”) using brute force, which gave us the executable runme, which, when ran with a command line argument (our name), it said we were doing a “heckuvajob up to this point”.  
 
 ---
 
@@ -85,4 +85,7 @@ Yes: as found in sched.txt, the suspected wanted to see the celebrity at:
 
 *Who is the celebrity that the suspect has been stalking?*  
 Lady Gaga (Stefani Germanotta)
+
+
+
 
