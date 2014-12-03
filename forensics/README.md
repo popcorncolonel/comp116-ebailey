@@ -2,8 +2,8 @@ Comp116 Assignment 5 - Forensics
 
 ---
 
-Group partners:
-Cameron Jackson
+**Group partners:**  
+Cameron Jackson  
 Eric Bailey
 
 Due 12/04/14
