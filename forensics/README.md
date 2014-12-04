@@ -15,7 +15,7 @@ Due 12/04/14
 hidden information in the picture that is different from the others. Please
 detail your steps!*
 
-We determined that b.jpg differed from the rest, isolating b.jpg using diff. Then, we used steghide to confirm that hidden data was located within b.jpg. We cracked the passphrase (‚Äúdisney‚Äù) using brute force, which gave us the executable runme, which, when ran with a command line argument (our name), it said we were doing a ‚Äúheckuvajob up to this point‚Äù.  
+We determined that b.jpg differed from the rest, isolating b.jpg using diff. Then, we used steghide to confirm that hidden data was located within b.jpg. We cracked the passphrase (ìdisneyî) using brute force, which gave us the executable runme, which, when ran with a command line argument (our name), it said we were doing a ìheckuvajob up to this pointî.  
 
 ---
 
@@ -29,7 +29,7 @@ There was no evidence of mobile phone files on any partition of this disk image;
 *What operating system, including version number, is being used? Please elaborate
 how you determined this information.*  
 Kali Linux 1.0.9
-We discovered this information by simply viewing the file /etc/debian_version, which had the contents ‚ÄúKali Linux 1.0.9‚Äù
+We discovered this information by simply viewing the file /etc/debian_version, which had the contents ìKali Linux 1.0.9î
 
 *What applications are installed on the disk? Please elaborate how you determined
 this information*  
@@ -42,7 +42,7 @@ Major Kali Linux applications, including (but not limited to):
 We found this information by perusing the standard Linux application directories in Autopsy.
 
 *Is there a root password? If so, what is it?*  
-Yes - the root password is ‚Äúprincess‚Äù. We found this by using John the Ripper‚Äôs wordlist on /etc/passwd and /etc/shadow after combining them via unshadow
+Yes - the root password is ìprincessî. We found this by using John the Ripperís wordlist on /etc/passwd and /etc/shadow after combining them via unshadow
 
 *Are there any additional user accounts on the system? If so, what are their
 passwords?*  
@@ -55,17 +55,17 @@ Via the same method of cracking passwords, we found the following passwords to t
 *List some of the incriminating evidence that you found. Please elaborate where
 and how you uncovered the evidence.*  
 
-* Video of Lady Gaga‚Äôs performance - vintage\_nyu\_performance.mp4 (on the user stefani).  
-* Many pictures - found on the / directory of alejandro‚Äôs user account.
-* sched.txt - contains a list of Lady Gaga‚Äôs performances.  
+* Video of Lady Gagaís performance - vintage\_nyu\_performance.mp4 (on the user stefani).  
+* Many pictures - found on the / directory of alejandroís user account.
+* sched.txt - contains a list of Lady Gagaís performances.  
 
-We found all this evidence via autopsy‚Äôs File Analysis Browser, and saved the files for viewing via the Export method.
+We found all this evidence via autopsyís File Analysis Browser, and saved the files for viewing via the Export method.
 
 *Did the suspect move or try to delete any files before his arrest? Please list
 the name(s) of the file(s) and any indications of their contents that you can
 find*  
-a15.jpg, a16.jpg, a17.jpg were deleted: We know this because of the indications (red highlighting) on autopsy‚Äôs deleted file identification support.  
-Also, a file called note.txt was deleted by the user stefani (indication: bash history includes: ‚Äúvim note.txt; rm note.txt‚Äù).
+a15.jpg, a16.jpg, a17.jpg were deleted: We know this because of the indications (red highlighting) on autopsyís deleted file identification support.  
+Also, a file called note.txt was deleted by the user stefani (indication: bash history includes: ìvim note.txt; rm note.txtî).
 
 *Did the suspect save pictures of the celebrity? If so, how many pictures of the
 celebrity did you find? (including any deleted images)*  
@@ -73,7 +73,7 @@ There appear to be 17 images under the user account alejandro (a1-a17.jpg), 3 of
 
 *Are there any encrypted files? If so, list the contents and a brief description
 of how you obtained the contents.*  
-There is an encrypted file; Namely, lockbox.txt. After downloading the file‚Äôs contents, we ran the command ‚Äúfile lockbox.txt,‚Äù through which we learned that the file is a Zip file. After trying to unzip it with a standard unzipping program, we saw that it was password protected. Then, we used a password list along with a simple shell script to brute force the password. However, we needed to add some password guesses related to the other information found on the disk to uncover the actual password (such as ‚Äòalejandro‚Äô, ‚Äòladygaga‚Äô, ‚Äòlady‚Äô, ‚Äògaga‚Äô, etc.). Luckily, we found that the actual password is ‚Äògaga‚Äô. Entering this password unencrypted the zip file and the contents were released - a 23.5MB video file called edge.mp4 which was a music video of Lady Gaga performing.
+There is an encrypted file; Namely, lockbox.txt. After downloading the fileís contents, we ran the command ìfile lockbox.txt,î through which we learned that the file is a Zip file. After trying to unzip it with a standard unzipping program, we saw that it was password protected. Then, we used a password list along with a simple shell script to brute force the password. However, we needed to add some password guesses related to the other information found on the disk to uncover the actual password (such as ëalejandroí, ëladygagaí, ëladyí, ëgagaí, etc.). Luckily, we found that the actual password is ëgagaí. Entering this password unencrypted the zip file and the contents were released - a 23.5MB video file called edge.mp4 which was a music video of Lady Gaga performing.
 
 *Do the suspect want to go see this celebrity? If so, note the date(s) and
 location(s) where the suspect want see to the celebrity.*  
@@ -85,6 +85,19 @@ Yes: as found in sched.txt, the suspected wanted to see the celebrity at:
 
 *Who is the celebrity that the suspect has been stalking?*  
 Lady Gaga (Stefani Germanotta)
+
+
+script: 
+#!/bin/bash
+# default: cracking steghide password
+
+while read w; do
+   	echo $w
+   	steghide extract -sf b.jpg -p "$w"
+# uncomment below for cracking zip
+#   	unzip -P "$w" lockbox.zip
+done <password.lst
+            	
 
 
 
